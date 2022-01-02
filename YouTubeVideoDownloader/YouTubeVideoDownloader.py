@@ -6,12 +6,20 @@ Description -- This program is designed to download YouTube videos from the inte
                 URL. 
 '''
 
+# import os and pytube module
+import os
 from pytube import YouTube
 
-SAVE_PATH = "/home/xars7/Desktop"
+# set the path 
+user_profile = os.path.expanduser('~')
+user_desktop = user_profile + "/Desktop"
+SAVE_PATH = user_desktop + "/YouTubeVideoDownloader"
 
-link = "https://www.youtube.com/watch?v=3cZKNPUx3pA"
+# set the download link 
+# example link to someordinarygamers :) "https://www.youtube.com/watch?v=3cZKNPUx3pA"
+link = input("Please enter the url of the video you would like to download: ")
 
+# download the video 
 yt = YouTube(link)
-stream = yt.streams.first()
+stream = yt.streams.filter(file_extension='mp4').first()
 stream.download(SAVE_PATH)
