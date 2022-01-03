@@ -4,6 +4,14 @@ This is a super simple program that is designed to
 download videos from YouTube and store them in a folder
 on your Desktop named "YouTubeVideoDownloader"
 
+***WINDOWS USERS***
+If you cannot find the folder on your desktop after downloading
+a video. Go to your file explorer and copy "YouTubeVideoDownloader" into the search 
+without quotes. The folder has been created it just hasn't registered
+on your Desktop it's a weird bug that I'm currently trying to fix.
+
+
+
 In order to run this script in your own python interperter you need to have the following
 things
 
