@@ -4,4 +4,4 @@ This is not a single project this is a code playground for my personal projects,
 
 As of currently there is nothing yet but I will be updating it soon while I work on my projects for 2022!
 
-YouTubeVideoDownloader - Currently in the works
+YouTubeVideoDownloader - A simple script that downloads whatever YouTube video url you give it
