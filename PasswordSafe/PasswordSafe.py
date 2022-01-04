@@ -20,14 +20,22 @@
 #
 #
 
+import os
+from cryptography.fernet import Fernet
+
+
 print("PasswordSafe v1.0.0 by Kevin Flynn(xars7)")
 
-
+# set the path 
+user_profile = os.path.expanduser('~')
+user_desktop = user_profile + "/Desktop"
+SAVE_PATH = user_desktop + "/PasswordSafe"
 
 # Create a login with a username and master password
 def createALogin(usernameCreate, masterPasswordCreate):
-    print(usernameCreate)
-    print(masterPasswordCreate)
+    with open(SAVE_PATH + "/MasterLogin.txt", "w") as login:
+        login.write(usernameCreate + ":" + masterPasswordCreate) 
+
 
 
 
@@ -42,7 +50,7 @@ mainMenuChoice = input("1. Create a login 2. Login to a safe : ")
 
 if mainMenuChoice == "1":
     username = input("Please enter in a username you would like to use : ")
-    masterPassword = input("Please enter the master password you would like to use")
+    masterPassword = input("Please enter the master password you would like to use : ")
     createALogin(username, masterPassword)
 elif mainMenuChoice == "2":
     loginToSafe()
