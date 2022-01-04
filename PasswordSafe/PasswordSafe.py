@@ -26,37 +26,83 @@ from cryptography.fernet import Fernet
 
 print("PasswordSafe v1.0.0 by Kevin Flynn(xars7)")
 
-key = Fernet.generate_key()
+# we want our users to be able to write down their passwords or view them
+#def accessVault():
 
-f = Fernet(key)
+
 
 # Create a login with a username and master password
 def createALogin(usernameCreate, masterPasswordCreate):
+    # generate an encryption key 
+    key = Fernet.generate_key()
+    f = Fernet(key)
+    # write that encryption key to a key file for safe keeping
+    with open("PasswordSafe/EncryptionKey.key", "wb") as fernetKey:
+        fernetKey.write(key)
 
+    # encode the username and master password before encryption
+    encodedUserCred = usernameCreate.encode("utf-8")
+    encodedPassCred = masterPasswordCreate.encode("utf-8")
     # encrypt the usernameCreate and masterPasswordCreate
-    encryptedUser = f.encrypt(b"{usernameCreate}")
-    encryptedMassPass = f.encrypt(b"{masterPasswordCreate}")
-
-    with open("PasswordSafe/MasterLogin.txt", "wb") as login:
-        login.write(encryptedUser + "\n".encode('ascii') + encryptedMassPass) 
+    encryptedUser = f.encrypt(encodedUserCred)
+    encryptedMassPass = f.encrypt(encodedPassCred)
+    # write the encrypted login to a login file
+    with open("PasswordSafe/Login.txt", "wb") as login:
+        login.write(encryptedUser) 
+    # write the encrypted MasterPassword to a MasterPassword File
+    with open("PasswordSafe/MasterPassword.txt", "wb") as masterPass:
+        masterPass.write(encryptedMassPass)
 
 
 
 
 # login to the password safe using the inputed master password and username
-#def loginToSafe():
+def loginToSafe(usernameLogin, masterPasswordLogin):
+    print("We got to the login function")
+    # read the encryption key
+    with open("PasswordSafe/EncryptionKey.key", "rb") as fernetKey:
+        key = fernetKey.read()
+        print("We read the key")
+    # read the encrypted login to a login file
+    with open("PasswordSafe/Login.txt", "rb") as login:
+        usernameCheck = login.read()
+        print("We read the login") 
+    # read the encrypted MasterPassword to a MasterPassword File
+    with open("PasswordSafe/MasterPassword.txt", "rb") as masterPass:
+        masterPassCheck = masterPass.read()
+        print("We read the password") 
+    
+    # create a Fernet object using the key we found earlier
+    f = Fernet(key)
 
+    # decrypt the usernameCheck and masterPasscheck
+    decryptedUserCred = f.decrypt(usernameCheck)
+    decryptedPassCred = f.decrypt(masterPassCheck)
 
+    # decodes the decrypted passwords to verify them with the user input
+    decodedUserCred = decryptedUserCred.decode()
+    decodedPassCred = decryptedPassCred.decode()
+
+    # if the credentials add up the program should say it works
+    if decodedUserCred == usernameLogin and decodedPassCred == masterPasswordLogin:
+        print("It works!")
+        #accessVault()
+    else:
+        print("wrong login credentials")
 
 
 # Ask a user to create a login or login to their safe
 mainMenuChoice = input("1. Create a login 2. Login to a safe : ")
 
+# If the user chooses one create a login page
 if mainMenuChoice == "1":
     username = input("Please enter in a username you would like to use : ")
     masterPassword = input("Please enter the master password you would like to use : ")
     createALogin(username, masterPassword)
+# If the user chooses two login to the password safe
 elif mainMenuChoice == "2":
-    loginToSafe()
+    username2 = input("Please enter your username : ")
+    masterPassword2 = input("Please enter the master password : ")
+    loginToSafe(username2, masterPassword2)
 else:
     print("That's not an option")
