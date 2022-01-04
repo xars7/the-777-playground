@@ -26,15 +26,19 @@ from cryptography.fernet import Fernet
 
 print("PasswordSafe v1.0.0 by Kevin Flynn(xars7)")
 
-# set the path 
-user_profile = os.path.expanduser('~')
-user_desktop = user_profile + "/Desktop"
-SAVE_PATH = user_desktop + "/PasswordSafe"
+key = Fernet.generate_key()
+
+f = Fernet(key)
 
 # Create a login with a username and master password
 def createALogin(usernameCreate, masterPasswordCreate):
-    with open(SAVE_PATH + "/MasterLogin.txt", "w") as login:
-        login.write(usernameCreate + ":" + masterPasswordCreate) 
+
+    # encrypt the usernameCreate and masterPasswordCreate
+    encryptedUser = f.encrypt(b"{usernameCreate}")
+    encryptedMassPass = f.encrypt(b"{masterPasswordCreate}")
+
+    with open("PasswordSafe/MasterLogin.txt", "wb") as login:
+        login.write(encryptedUser + "\n".encode('ascii') + encryptedMassPass) 
 
 
 
