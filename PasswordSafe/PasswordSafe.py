@@ -5,68 +5,64 @@
 #                 them" and you are absolutely right. That's why we are going to encrypt them before we send them to their designated txt file. The only way you'll be able 
 #                 to access your passwords is if you enter in the correct master password and login.
 #
-#                 TODO:
-#                       Step 1. Ask a user to create a login or login in to their safe
-#                       Step 2. IF: the user has decided to create an account, create a file with their login and password for later logins
-#                               IF: the user has decided to login, read the file that corresponds with their username and see if they have entered the right passsword, if so
-#                                   let them into their safe
-#                       Step 3. Ask the user if they would like to see their passwords or create a new one                               
-#                       Step 4. IF: the user want's to create a password go into the createPassword function
-#                               IF: the user asks to see their passwords show them their passwords
-#                       Exit the program whenever user types exit/Exit
 #
+#   HOW TO USE: 
+#               Step 1. Start up the program and enter in the number "1". This will bring you through the creation process of your master credentials wich will be stored in
+#                       the "MasterCreds" folder
+#               Step 2. Login to your vault by pressing the number "2" button the next time the program asks you to choose. Enter in your master credentials that you created
+#                       in step 1.
+#               Step 3. You will be prompted on whether or not you want to generate a password or view a password. To generate a password enter in the number "2". Enter in the 
+#                       name that you want to find your credentials by for example ("GMail"), the username for your password, whether you want special characters or not, and then
+#                       the length that you want your password
+#               Step 4. To view a password simply access the vault again by loggin in and select the view password option number "1". Enter in the name that you specified last time
 #
+#                       ****NOTE**** this program is very case sensitive, if the program cannot find your password please check your spelling. As a last resort you can always
+#                                    check the "UsernameDB" and the "PasswordDB" to find the exact name you used for your credentials
+#               Step 5. Enjoy the feeling of having your passwords protected!
 #
-#
-#
-
 # Import modules
 import os
 from cryptography.fernet import Fernet
 import random
 import string
 
+# Print program version number
 print("PasswordSafe v1.0.0 by Kevin Flynn(xars7)")
 
+# when the user chooses this option we want them to be able to view their passwords
 def viewPasswords():
-    # when the user chooses this option we want them to be able to view their passwords
-    # question is all the passwords at once, or whichever one they choose?
-    # if we do all the passwords at once it might be troublesome to the user to sift through all the passwords
-    # I think it's best to do the second route
-
     # get the encryption key
-    with open("PasswordSafe/EncryptionKey.key", "rb") as encKey:
+    with open("PasswordSafe/MasterCreds/EncryptionKey.key", "rb") as encKey:
         key = encKey.read()
 
     # Create a Fernet object with key
     f = Fernet(key)
-
+    # Find the password the user wants to see
     findPassName = input("Please enter the name of the password you are looking for (Ex. Google) : ")
+    # open the password file with the designated name
     with open("PasswordSafe/PasswordDB/" + findPassName, "rb") as password:
         thePass = password.read()
-
+    # open the username file with the designated name
     with open("PasswordSafe/UsernameDB/" + findPassName, "rb") as username:
         theUser = username.read()
 
     # decrypt the password and username
     decryptedPass = f.decrypt(thePass)
     decryptedUser = f.decrypt(theUser)
-
+    # decodes the password and username to display it to the user
     decodedPass = decryptedPass.decode()
     decodedUser = decryptedUser.decode()
+    # print the credentials
+    print("Your credentials are : " + decodedUser + " | " + decodedPass)
 
-
-    print("Your credentials are : " + decodedUser + ":" + decodedPass)
-
-    #
-
+# This function creates the passwords
 def createPassword():
     # when the user chooses this option we want them to be able to create a random password for the database
     # they need to be able to choose the length of the password and wether or not special characters are needed
     # and then save the login credentials in files named by the user
 
     # find the encryption key
-    with open("PasswordSafe/EncryptionKey.key", "rb") as encKey:
+    with open("PasswordSafe/MasterCreds/EncryptionKey.key", "rb") as encKey:
         key = encKey.read()
 
     # create a Fernet object using the key
@@ -116,25 +112,8 @@ def createPassword():
         with open("PasswordSafe/UsernameDB/" + passwordName, "wb") as username:
             username.write(encryptedUser)
 
-    
-
-# we want our users to be able to write down their passwords or view them
+# create new passwords or view passwords we've created
 def accessVault():
-    # in order for them to view old passwords or encrypt new passwords they need an encryption key
-    # we are going to use the same EncryptionKey.key file from before to encrypt new passwords or
-    # decrypt password they've already written.
-    # everytime they create a password we want to create a new text file labeled with the name of the website
-    # or name of the place they use the credentials for, and place the encrypted password in the file 
-    # it would probably be best to create another folder within the project folder to hold the encryption keys
-    # and encrypted login txts
-    # all they need is the python script and it takes a lot of the eye sore of 20 files in a folder 
-
-    # get encryption key
-    with open("PasswordSafe/EncryptionKey.key", "rb") as encryptKey:
-        key = encryptKey.read()
-    # Create a Fernet object with the key
-    f = Fernet(key)
-
     # ask the user if they want to create a password or view their passwords
     vaultMenuChoice = input("1. View my passwords 2. Create a password : ")
 
@@ -147,14 +126,13 @@ def accessVault():
     else:
         print("That's not a menu choice")
 
-
 # Create a login with a username and master password
 def createALogin(usernameCreate, masterPasswordCreate):
     # generate an encryption key 
     key = Fernet.generate_key()
     f = Fernet(key)
     # write that encryption key to a key file for safe keeping
-    with open("PasswordSafe/EncryptionKey.key", "wb") as fernetKey:
+    with open("PasswordSafe/MasterCreds/EncryptionKey.key", "wb") as fernetKey:
         fernetKey.write(key)
 
     # encode the username and master password before encryption
@@ -164,25 +142,22 @@ def createALogin(usernameCreate, masterPasswordCreate):
     encryptedUser = f.encrypt(encodedUserCred)
     encryptedMassPass = f.encrypt(encodedPassCred)
     # write the encrypted login to a login file
-    with open("PasswordSafe/Login.txt", "wb") as login:
+    with open("PasswordSafe/MasterCreds/Login.txt", "wb") as login:
         login.write(encryptedUser) 
     # write the encrypted MasterPassword to a MasterPassword File
-    with open("PasswordSafe/MasterPassword.txt", "wb") as masterPass:
+    with open("PasswordSafe/MasterCreds/MasterPassword.txt", "wb") as masterPass:
         masterPass.write(encryptedMassPass)
-
-
-
 
 # login to the password safe using the inputed master password and username
 def loginToSafe(usernameLogin, masterPasswordLogin):
     # read the encryption key
-    with open("PasswordSafe/EncryptionKey.key", "rb") as fernetKey:
+    with open("PasswordSafe/MasterCreds/EncryptionKey.key", "rb") as fernetKey:
         key = fernetKey.read()
     # read the encrypted login to a login file
-    with open("PasswordSafe/Login.txt", "rb") as login:
+    with open("PasswordSafe/MasterCreds/Login.txt", "rb") as login:
         usernameCheck = login.read()
     # read the encrypted MasterPassword to a MasterPassword File
-    with open("PasswordSafe/MasterPassword.txt", "rb") as masterPass:
+    with open("PasswordSafe/MasterCreds/MasterPassword.txt", "rb") as masterPass:
         masterPassCheck = masterPass.read()
     
     # create a Fernet object using the key we found earlier
@@ -202,19 +177,28 @@ def loginToSafe(usernameLogin, masterPasswordLogin):
     else:
         print("wrong login credentials")
 
+# this is our main function
+def main():
+    # This is our main while loop
+    while True:
+        # Ask a user to create a login or login to their safe
+        mainMenuChoice = input("1. Create a login 2. Login to a safe : ")
+        # If the user chooses one create a login page
+        if mainMenuChoice == "1":
+            username = input("Please enter in a username you would like to use : ")
+            masterPassword = input("Please enter the master password you would like to use : ")
+            createALogin(username, masterPassword)
+        # If the user chooses two login to the password safe
+        elif mainMenuChoice == "2":
+            username2 = input("Please enter your username : ")
+            masterPassword2 = input("Please enter the master password : ")
+            loginToSafe(username2, masterPassword2)
+        # If the user types quit quit the program
+        elif mainMenuChoice == "Quit" or mainMenuChoice == "quit" or mainMenuChoice == "Exit" or mainMenuChoice == "exit":
+            quit()
+        else:
+            print("That's not an option")
 
-# Ask a user to create a login or login to their safe
-mainMenuChoice = input("1. Create a login 2. Login to a safe : ")
-
-# If the user chooses one create a login page
-if mainMenuChoice == "1":
-    username = input("Please enter in a username you would like to use : ")
-    masterPassword = input("Please enter the master password you would like to use : ")
-    createALogin(username, masterPassword)
-# If the user chooses two login to the password safe
-elif mainMenuChoice == "2":
-    username2 = input("Please enter your username : ")
-    masterPassword2 = input("Please enter the master password : ")
-    loginToSafe(username2, masterPassword2)
-else:
-    print("That's not an option")
+# Run our main function on startup
+if __name__ == "__main__":
+    main()
