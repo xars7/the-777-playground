@@ -5,4 +5,4 @@ This is not a single project this is a code playground for my personal projects,
 As of currently there is nothing yet but I will be updating it soon while I work on my projects for 2022!
 
 YouTubeVideoDownloader - A simple script that downloads whatever YouTube video url you give it
-PasswordSafe - Still in the works
+PasswordSafe - A program to generate passwords and keep them safe!
