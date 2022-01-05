@@ -2,6 +2,15 @@ WikiSpider v1.0.0
 
 Made on 1/4/22
 
+REQUIREMENTS -
+
+    In order to run this program you need to import he modules BeautifulSoup4 and the Requests module using pip
+    here are some resources to help you install these modules and pip if you don't already have it
+
+    How to install pip - https://pip.pypa.io/en/stable/installation/
+    How to install BeautifulSoup4 - https://www.geeksforgeeks.org/beautifulsoup-installation-python/
+    How to install Requests - https://www.geeksforgeeks.org/how-to-install-requests-in-python-for-windows-linux-mac/
+
 I cannot take full credit on this one, because I used some awesome peoples code to help me out!
 Check these links to find the websites I used to help me make this WikiSpider
 Please give them a visit they deserve the love!
