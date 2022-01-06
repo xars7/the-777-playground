@@ -4,7 +4,7 @@ Made on 1/4/22
 
 REQUIREMENTS -
 
-    In order to run this program you need to import he modules BeautifulSoup4 and the Requests module using pip
+    In order to run this program you need to import the modules BeautifulSoup4 and the Requests module using pip
     here are some resources to help you install these modules and pip if you don't already have it
 
     How to install pip - https://pip.pypa.io/en/stable/installation/
