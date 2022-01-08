@@ -41,7 +41,7 @@ def main():
     while True:
         if menuChoice == "1":
             countTime = input("Enter the time in seconds: ")
-            countDown(countTime)
+            countDown(int(countTime))
         elif menuChoice == "2":
             stopWatch()
         elif menuChoice == "Q" or "q":
