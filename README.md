@@ -12,4 +12,4 @@ WikiSpider - this simple web crawler will go onto the wikipage you specify in th
             it then will go on an endless loop of choosing random links on that wiki page until it either gets stuck
             or can't request the page. Watch the spider go from the topic 'web scraping' to 'Kanpur Central railway station'
 
-TerminalTimer - very simple program witha Countdown timer and StopWatch function
+TerminalTimer - very simple program with a Countdown timer and StopWatch function
