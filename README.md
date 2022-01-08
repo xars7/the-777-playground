@@ -13,3 +13,6 @@ WikiSpider - this simple web crawler will go onto the wikipage you specify in th
             or can't request the page. Watch the spider go from the topic 'web scraping' to 'Kanpur Central railway station'
 
 TerminalTimer - very simple program with a Countdown timer and StopWatch function
+
+Updater - this is a bash script used to update and upgrade your linux without having to type in the command
+
