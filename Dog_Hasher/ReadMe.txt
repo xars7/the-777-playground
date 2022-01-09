@@ -1,4 +1,5 @@
 # Dog_Hasher.py v1.0.0 by Kevin Flynn/xars7
+# 1-8-22
 #
 # Description - 
 #   This program is the opposite of hashcat. It will take a password from the rockyou.txt dictionary file, hash it using the algorithm you choose and (md5, sha1, sha224, etc), and 
