@@ -9,10 +9,13 @@
 # import modules
 import hashlib
 import random
-import pathlib
+import os
 
 # get the path to the rockyou.txt file located in the project folder
-file_path = str(pathlib.Path.cwd() + "/rockyou.txt")
+#file_path = str(pathlib.Path.cwd() + "/rockyou.txt")
+
+full_path =  os.path.realpath(__file__)
+file_path = os.path.dirname(full_path)
 
 # our main function
 def main():
