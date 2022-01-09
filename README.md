@@ -16,3 +16,6 @@ TerminalTimer - very simple program with a Countdown timer and StopWatch functio
 
 Updater - this is a bash script used to update and upgrade your linux without having to type in the command
 
+Dog_Hasher - quite the opposite of Hashcat. Want to learn how to use hashcat but want to do it legally? use this program to make a random hash
+            from the rockyou.txt wordlist. 
+

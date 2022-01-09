@@ -1,0 +1,3 @@
+This is an example file 
+
+move your rockyou.txt file into here and rename it the same thing as this file
