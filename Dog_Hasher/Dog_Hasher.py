@@ -15,6 +15,7 @@ import os
 
 full_path =  os.path.realpath(__file__)
 file_path = os.path.dirname(full_path)
+file_path = str(file_path + "/rockyou.txt")
 
 # our main function
 def main():
