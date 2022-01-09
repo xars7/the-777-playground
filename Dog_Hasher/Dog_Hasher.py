@@ -9,6 +9,10 @@
 # import modules
 import hashlib
 import random
+import pathlib
+
+# get the path to the rockyou.txt file located in the project folder
+file_path = str(pathlib.Path.cwd() + "/rockyou.txt")
 
 # our main function
 def main():
@@ -21,7 +25,7 @@ def main():
     # each if statement is the same the only difference is the hashing algorithm
     if menuChoice == '1':
         # finds the rockyou.txt, chooses a random line, and assigns it to password
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         # prints the password in plain text
         print(password)
         # hashes the password
@@ -29,27 +33,27 @@ def main():
         # prints the hashed password
         print(hash_object.hexdigest())
     elif menuChoice == '2':
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         print(password)
         hash_object = hashlib.sha1(password.encode())
         print(hash_object.hexdigest())
     elif menuChoice == '3':
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         print(password)
         hash_object = hashlib.sha224(password.encode())
         print(hash_object.hexdigest())
     elif menuChoice == '4':
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         print(password)
         hash_object = hashlib.sha256(password.encode())
         print(hash_object.hexdigest())
     elif menuChoice == '5':
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         print(password)
         hash_object = hashlib.sha384(password.encode())
         print(hash_object.hexdigest())
     elif menuChoice == '6':
-        password = random.choice(open("C:/Users/kevin/Desktop/Code/Dog_Hasher/rockyou.txt", errors="ignore").readlines())
+        password = random.choice(open(file_path, errors="ignore").readlines())
         print(password)
         hash_object = hashlib.sha512(password.encode())
         print(hash_object.hexdigest())
