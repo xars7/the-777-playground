@@ -19,3 +19,5 @@ Updater - this is a bash script used to update and upgrade your linux without ha
 Dog_Hasher - quite the opposite of Hashcat. Want to learn how to use hashcat but want to do it legally? use this program to make a random hash
             from the rockyou.txt wordlist. 
 
+encoder64 - this is a simple script that will encode and decode text using base64
+
